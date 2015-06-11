@@ -1,6 +1,6 @@
 #!flask/bin/python
 from flask import Flask, jsonify
-from administradorConsultas import AdministradorConsultas
+#from administradorConsultas import AdministradorConsultas
 from red import xmls_to_red
 
 DIRECTORIO_PROYECTO = '/home/vigtech/shared/'
