@@ -51,7 +51,7 @@ def obtener_autores(xmls):
                 documento += 1
                 for authors in child.findall('{http://www.w3.org/2005/Atom}author'):
                     for child2 in authors.findall('{http://www.w3.org/2005/Atom}authname'):
-                        print child2.tag, child2.text, documento
+                        #print child2.tag, child2.text, documento
                         autor = child2.text.encode('utf-8')
                         if(autores.get(autor) == None):
                             autores[autor] = []
