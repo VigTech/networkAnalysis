@@ -6,8 +6,8 @@ class Red:
     '''La clase representa una red que se construye a partir de listas.
     '''
     def __init__(self, conjuntos, nombre, etiquetas_nodos = None):
-        #self.grafo, 
-        self.nombre_punto_net = self.construir_red_autocorrelacion(conjuntos, nombre, self.contar_coincidencias, etiquetas_nodos)
+        self.grafo, self.nombre_punto_net = self.construir_red_autocorrelacion(conjuntos, nombre, self.contar_coincidencias, etiquetas_nodos)
+        #self.nombre_punto_net = self.construir_red_autocorrelacion(conjuntos, nombre, self.contar_coincidencias, etiquetas_nodos)
 
 
     def construir_red_autocorrelacion(self, conjuntos, nombre, contar_coinc, etiquetas_nodos):
@@ -33,8 +33,7 @@ class Red:
                     print(i,j,"  ",coinc)
                     red.write(str(i+1)+" "+str(j+1)+" "+str(coinc)+"\n")
         red.close()
-        #return igraph.read(nombre+".net",format="pajek"), 
-        return red.name
+        return igraph.read(nombre+".net",format="pajek"), red.name
     def contar_coincidencias(self, conjunto_1, conjunto_2):
         coincidencias = 0
         for elemento_en_1 in conjunto_1:
