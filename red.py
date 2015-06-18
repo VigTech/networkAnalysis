@@ -65,12 +65,17 @@ class Red:
         cant_vertices = int(punto_net.readline().split(' ')[1])
         #Aquí se van a almacenar los tamaños de los nodos en función de sus aristas.
         tamanos = [0]*cant_vertices
+        #Cluster coefficient de cada nodo
+        cluscffs = self.grafo.transitivity_local_undirected()
+        degrees = self.grafo.degree()
+        strenghts = self.grafo.strength(weights=self.grafo.es['weight'])
         for i in range(cant_vertices):
             autor = punto_net.readline().rstrip().split(' "')
             id = autor[0]
             name = autor[1].replace('"','')
             #nodos.append("{"name": "'+name+', "size": tamanio, "id": '+id+'}")
-            nodos.append({"name": name, "size": 'tamanio', "id": str(id)})
+            nodos.append({"name": name, "size": 'tamanio', "id": id, "cc": cluscffs[i], "degree": degrees[i],
+							"strength":strenghts[i]})
         #Para saltarse la línea que dice "edges" en el .net
         punto_net.readline()
         for arista in punto_net:
@@ -81,7 +86,7 @@ class Red:
 			tamanos[int(origen)-1] += int(peso)
 			tamanos[int(destino)-1] += int(peso)
             #aristas.append('{"source": '+origen+', "target": '+destino+', "strength": '+peso+'},')
-			aristas.append({"source": origen, "target": destino, "strength": peso})
+			aristas.append({"source": int(origen)-1, "target": int(destino)-1, "strength": peso})
             
         #Volver al inicio del .net
         punto_net.seek(0)
@@ -94,6 +99,7 @@ class Red:
         punto_net.seek(0)
 
         print tamanos
+        print 'CC: ', self.grafo.transitivity_local_undirected()
         return nodos, aristas
         #return sum_lista_strings(nodos), sum_lista_strings(aristas)
 
