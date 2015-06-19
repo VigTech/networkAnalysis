@@ -74,7 +74,7 @@ class Red:
             id = autor[0]
             name = autor[1].replace('"','')
             #nodos.append("{"name": "'+name+', "size": tamanio, "id": '+id+'}")
-            nodos.append({"name": name, "size": 'tamanio', "id": id, "cc": cluscffs[i], "degree": degrees[i],
+            nodos.append({"name": name, "size": 'tamanio', "id": id, "cc": str(cluscffs[i]), "degree": degrees[i],
 							"strength":strenghts[i]})
         #Para saltarse la línea que dice "edges" en el .net
         punto_net.readline()
