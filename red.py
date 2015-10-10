@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import igraph
+import json
 from manejadorArchivos import leer_archivo, obtener_autores
 
 class Red:
@@ -110,10 +111,12 @@ def sum_lista_strings(lista):
     return string_completa
 
 
-def xmls_to_red(xmls, nombre):
+#def xmls_to_red(xmls, nombre):
+def xmls_to_red(json_autores):
     '''Gernera un objeto Red, a partir de una lista de xml
     '''
-    diccionario_autores = obtener_autores(xmls)
+    diccionario_autores = json.loads(json_autores)
+    #diccionario_autores = obtener_autores(xmls)
     lista_autores = []
     lista_nombres = []
     for autor in diccionario_autores:

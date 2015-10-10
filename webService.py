@@ -10,9 +10,13 @@ app = Flask(__name__)
 
 @app.route('/red/', methods=['GET'])
 def get_red():
+	'''
 	proyecto = request.args.get('proyecto')
 	user = request.args.get('user')
 	red = xmls_to_red([open(DIRECTORIO_PROYECTO+'%s.%s/busqueda0.xml'%(user,proyecto))], 'RedCoauth')
+	'''
+	json = request.args.get('datosJson')
+	red = xmls_to_red(json)
 	cc=  red.clustering_coefficient()
 	ad = red.average_degree()
 	avs = red.average_strength()
