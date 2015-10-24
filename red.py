@@ -23,7 +23,7 @@ class Red:
 
         if etiquetas_nodos!=None:
             for i,etiqueta in enumerate(etiquetas_nodos):
-                red.write(str(i+1)+' "'+etiqueta+'"\n')
+                red.write(str(i+1)+' "'+etiqueta.encode('utf-8', "ignore")+'"\n')
 
         red.write("*Edges\n")
         for i in range(cantidad_nodos-1):
