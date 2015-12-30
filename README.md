@@ -1,4 +1,4 @@
-## Servicio web de Scopus
+## Servicio web de análisis de redes de coautoría.
 
 ### Host
 IP del contenedor donde se aloja el servicio
