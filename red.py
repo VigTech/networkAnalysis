@@ -4,7 +4,13 @@ import json
 from manejadorArchivos import leer_archivo, obtener_autores
 
 class Red:
-    '''La clase representa una red que se construye a partir de listas.
+    '''La clase representa una red de coautoría que se construye a partir de conjuntos de identificadores de papers.
+    '''
+    '''
+    Parámetros
+    conjuntos : Lista de listas de identificadores de papers
+    nombre : Nombre del archivo .net
+    etiquetas_nodos : etiqueta de cada nodo de la red que corresponde a cada lista de conjuntos.
     '''
     def __init__(self, conjuntos, nombre, etiquetas_nodos = None):
         self.grafo, self.nombre_punto_net = self.construir_red_autocorrelacion(conjuntos, nombre, self.contar_coincidencias, etiquetas_nodos)
@@ -12,10 +18,16 @@ class Red:
 
 
     def construir_red_autocorrelacion(self, conjuntos, nombre, contar_coinc, etiquetas_nodos):
-        '''Construye la red de autocorrelación de un conjunto de conjuntos
+        '''Construye la red de autocorrelación de un conjunto de conjuntos en formato pajek y la escribe en un archivo nombre.net
 
         Parámetros
-        Conjuntos es una lista de listas'''
+        conjuntos : Lista de listas de identificadores de papers
+        nombre : Nombre del archivo .net
+        contar_coinc: Función para contar los elementos de la intersección entre dos conjuntos cualesquiera
+        etiquetas_nodos : etiqueta de cada nodo de la red que corresponde a cada lista de conjuntos.
+
+        Retorna
+        Tupla con un objeto igraph que sirve para calcular medidas de la red y el nombre de la red'''
         print(len(conjuntos))
         cantidad_nodos = len(conjuntos)
         red = open(nombre+".net", 'w')
@@ -36,6 +48,12 @@ class Red:
         red.close()
         return igraph.read(nombre+".net",format="pajek"), red.name
     def contar_coincidencias(self, conjunto_1, conjunto_2):
+        '''
+        Cuenta los elementos de la intersección entre dos conjuntos cualesquiera
+        Parámetros
+        conjunto_1 : Lista de elementos
+        conjunto_2 : Lista de elementos
+        '''
         coincidencias = 0
         for elemento_en_1 in conjunto_1:
             if elemento_en_1 in conjunto_2:
@@ -54,7 +72,9 @@ class Red:
         return self.grafo.average_path_length()
 
     def generar_json(self):
-        '''Construye el json que se usa como entrada de D3, a partir de una red .net'''
+        '''Construye el json que se usa como entrada de D3, a partir de una red .net. Retorna los nodos y las aristas
+        en el formato que lee D3
+        '''
         punto_net = open(self.nombre_punto_net)
         json = open('json', 'w')
         nodos = []
@@ -113,7 +133,10 @@ def sum_lista_strings(lista):
 
 #def xmls_to_red(xmls, nombre):
 def xmls_to_red(json_autores):
-    '''Gernera un objeto Red, a partir de una lista de xml
+    '''Gernera un objeto Red, a partir de un json
+    Parámetros
+    json_autores : json cuyas llaves corresponden a nombres de autores y los valores a listas de eids correspondientes a los papers 
+    escritos por el autor. Ejemplo {pedro: [eid1, eid2]}
     '''
     diccionario_autores = json.loads(json_autores)
     #diccionario_autores = obtener_autores(xmls)
@@ -154,4 +177,4 @@ def main():
     # visual_style["margin"] = 20
     # igraph.plot(r.grafo,'autoresNUEVoo.pdf', **visual_style)
 
-#main()
+main()
